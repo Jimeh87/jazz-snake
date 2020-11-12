@@ -27,7 +27,7 @@ class Battlesnake(object):
             "apiversion": "1",
             "author": "Jim Rennie",
             "color": "#006400",
-            "head": "tongue",
+            "head": "silly",
             "tail": "small-rattle",
         }
 
