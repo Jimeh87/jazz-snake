@@ -1,4 +1,4 @@
-from classes.gameboard import GameBoard
+from jazz_snake.gameboard import GameBoard
 
 
 class FoodLayer:
