@@ -25,10 +25,10 @@ class Battlesnake(object):
         # TIP: If you open your Battlesnake URL in browser you should see this data
         return {
             "apiversion": "1",
-            "author": "Jim",
-            "color": "#4169e1",
-            "head": "beluga",
-            "tail": "pixel",
+            "author": "Jim Rennie",
+            "color": "#006400",
+            "head": "tongue",
+            "tail": "small-rattle",
         }
 
     @cherrypy.expose
