@@ -5,7 +5,6 @@ from jazz_snake.board.gameboard import GameBoard
 
 
 class SnakeLayer:
-
     LIFE_CYCLE = LayerLifeCycle.DEATH_THREAT_ANALYSIS
 
     def __init__(self, snake, you):
@@ -28,7 +27,6 @@ class SnakeLayer:
             game_board.set_cell(head_x - 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
             game_board.set_cell(head_x, head_y + 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
             game_board.set_cell(head_x, head_y - 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
-
 
         snake_body = self._snake['body']
         for i in range(self._snake['length']):
