@@ -20,16 +20,16 @@ class JazzSnake:
             layer_factory.create_direct_path_layer()
         )
 
-        self._board.print()
+        # self._board.print()
 
     def calculate_move(self) -> str:
         your_head = self._game_data['you']['head']
 
         possible_moves = self._board.get_neighbour_final_cells(your_head['x'], your_head['y'])
         random.shuffle(possible_moves)
-        possible_moves = sorted(possible_moves, key=lambda m: (m['cell'][CellDataType.DEATH_THREAT_LEVEL],
-                                                               -m['cell'][CellDataType.AVAILABLE_AREA],
-                                                               m['cell'][CellDataType.DESIRED_PATH]))
+        possible_moves.sort(key=lambda m: (m['cell'][CellDataType.DEATH_THREAT_LEVEL],
+                                           -int(m['cell'][CellDataType.AVAILABLE_AREA] * 1000),
+                                           m['cell'][CellDataType.DESIRED_PATH]))
 
         JazzSnake.print_cells(possible_moves)
 
