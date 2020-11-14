@@ -13,9 +13,12 @@ class LayerFactory:
     def create_food_layer(self) -> FoodLayer:
         return FoodLayer(self._game_data['board']['food'])
 
-    def create_snake_layer(self) -> SnakeLayer:
-        # TODO All of the snakes
-        return SnakeLayer(self._game_data['you'], self._game_data['you'])
+    def create_snake_layer(self) -> [SnakeLayer]:
+        layers = []
+        for snake in self._game_data['board']['snakes']:
+            layers.append(SnakeLayer(snake, self._game_data['you']))
+
+        return layers
 
     def create_direct_path_layer(self) -> [DirectPathLayer]:
         layers = []
