@@ -1,9 +1,13 @@
 from math import copysign
 
-from jazz_snake.gameboard import GameBoard
+from jazz_snake.board.layerlifecycle import LayerLifeCycle
+from jazz_snake.board.celldatatype import CellDataType
+from jazz_snake.board.gameboard import GameBoard
 
 
 class DirectPathLayer:
+
+    LIFE_CYCLE = LayerLifeCycle.PATHING
 
     def __init__(self, you_snake_head, food):
         self._you_snake_head = you_snake_head
@@ -15,21 +19,14 @@ class DirectPathLayer:
                                         self._food['x'],
                                         self._food['y'])
 
-        if len(bresenham_path) == 0:
-            print("BRESENHAM_PATH_EMPTY: ",
-                  self._you_snake_head['x'],
-                  self._you_snake_head['y'],
-                  self._food['x'],
-                  self._food['y'])
+        steps, safe_path = self.safe_direct_snake_path(game_board, bresenham_path)
 
-        safe_path = self.safe_direct_snake_path(game_board, bresenham_path)
-        print(f"b path: {bresenham_path}")
-        print(f"s path: {safe_path}")
         for cell in safe_path:
-            game_board.increment_cell(cell['x'], cell['y'], game_board.CELL_OPTIMAL)
+            game_board.set_cell(cell['x'], cell['y'], CellDataType.DESIRED_PATH, steps)
 
     @staticmethod
-    def safe_direct_snake_path(game_board: GameBoard, bresenham_path):
+    def safe_direct_snake_path(game_board: GameBoard, bresenham_path) -> (int, []):
+        steps = 0
         path = []
         previous = None
 
@@ -52,32 +49,35 @@ class DirectPathLayer:
                     if game_board.is_cell_safe(option['x'], option['y']):
                         safe_options.append(option)
                 if len(safe_options) == 0:
+                    return 0, []
 
-                    return []
+                steps += 1
                 path.extend(safe_options)
 
             if not game_board.is_cell_safe(current['x'], current['y']):
-                return []
+                return 0, []
+
+            steps += 1
             path.append(current)
 
-        return path
+        return steps, path
 
     @staticmethod
     def bresenham(x0, y0, x1, y1):
         dx = x1 - x0
         dy = y1 - y0
 
-        xsign = 1 if dx > 0 else -1
-        ysign = 1 if dy > 0 else -1
+        x_sign = 1 if dx > 0 else -1
+        y_sign = 1 if dy > 0 else -1
 
         dx = abs(dx)
         dy = abs(dy)
 
         if dx > dy:
-            xx, xy, yx, yy = xsign, 0, 0, ysign
+            xx, xy, yx, yy = x_sign, 0, 0, y_sign
         else:
             dx, dy = dy, dx
-            xx, xy, yx, yy = 0, ysign, xsign, 0
+            xx, xy, yx, yy = 0, y_sign, x_sign, 0
 
         d = 2 * dy - dx
         y = 0

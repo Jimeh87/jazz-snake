@@ -1,7 +1,11 @@
-from jazz_snake.gameboard import GameBoard
+from jazz_snake.board.layerlifecycle import LayerLifeCycle
+from jazz_snake.board.celldatatype import CellDataType
+from jazz_snake.board.gameboard import GameBoard
 
 
-class AvailableMovesLayer:
+class AreasLayer:
+
+    LIFE_CYCLE = LayerLifeCycle.AREA_ANALYSIS
 
     def __init__(self, you_snake):
         self._you_snake_head = you_snake['head']
@@ -10,31 +14,20 @@ class AvailableMovesLayer:
     def visit(self, game_board: GameBoard):
         cell_area_counter = self.CellAreaCounter(game_board)
 
-        head_direction_cells = [
-            {'x': self._you_snake_head['x'], 'y': self._you_snake_head['y'] + 1},
-            {'x': self._you_snake_head['x'], 'y': self._you_snake_head['y'] - 1},
-            {'x': self._you_snake_head['x'] + 1, 'y': self._you_snake_head['y']},
-            {'x': self._you_snake_head['x'] - 1, 'y': self._you_snake_head['y']}
-        ]
+        head_direction_points = list(map(
+            lambda p: p['point'],
+            game_board.get_neighbour_cell_points(self._you_snake_head['x'], self._you_snake_head['y'])
+        ))
 
         cell_areas = set()
-        for head_direction_cell in head_direction_cells:
-            cell_areas.add(frozenset(cell_area_counter.count((head_direction_cell['x'], head_direction_cell['y']))))
+        for head_direction_point in head_direction_points:
+            cell_areas.add(frozenset(cell_area_counter.count(head_direction_point)))
 
         for cell_area in cell_areas:
             coverage = len(cell_area) / float(game_board.get_total_cells())
 
-            cell_safety = None
-            if coverage < .1:
-                cell_safety = GameBoard.CELL_EXTREME_DANGER
-            elif coverage < .2:
-                cell_safety = GameBoard.CELL_HIGH_DANGER
-            elif coverage < .1:
-                cell_safety = GameBoard.CELL_LOW_DANGER
-
-            if cell_safety is not None:
-                for cell in cell_area:
-                    game_board.set_cell(cell[0], cell[1], cell_safety)
+            for point in cell_area:
+                game_board.set_cell(point[0], point[1], CellDataType.AVAILABLE_AREA, coverage)
 
     class CellAreaCounter:
 

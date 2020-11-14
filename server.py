@@ -3,12 +3,13 @@ import random
 
 import cherrypy
 
-from jazz_snake.availablemoveslayer import AvailableMovesLayer
-from jazz_snake.boundarylayer import BoundaryLayer
-from jazz_snake.directpathlayer import DirectPathLayer
-from jazz_snake.foodlayer import FoodLayer
-from jazz_snake.gameboard import GameBoard
-from jazz_snake.snakelayer import SnakeLayer
+from jazz_snake.jazzsnake import JazzSnake
+from jazz_snake.layer.areaslayer import AreasLayer
+from jazz_snake.layer.boundarylayer import BoundaryLayer
+from jazz_snake.layer.directpathlayer import DirectPathLayer
+from jazz_snake.layer.foodlayer import FoodLayer
+from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.layer.snakelayer import SnakeLayer
 
 """
 This is a simple Battlesnake server written in Python.
@@ -52,35 +53,11 @@ class Battlesnake(object):
         data = cherrypy.request.json
         print(f"DATA: {data}")
 
-        board = GameBoard(data['board']['height'], data['board']['width'])
-        board.accept_layer(BoundaryLayer())
-        board.accept_layer(SnakeLayer(data['you']))
-        print(f"dos head: {data['you']['head']}")
-        print(f"dos food: {data['board']['food']}")
-        board.accept_layer(FoodLayer(data['board']['food']))
-        board.accept_layer(AvailableMovesLayer(data['you']))
-        board.accept_layer(DirectPathLayer(data['you']['head'], data['board']['food'][0]))
-        board.print()
-
-        your_head = data['you']['head']
-        possible_moves = sorted([
-            {'move': 'up', 'cell_value': board.get_cell_above(your_head['x'], your_head['y'])},
-            {'move': 'down', 'cell_value': board.get_cell_below(your_head['x'], your_head['y'])},
-            {'move': 'left', 'cell_value': board.get_cell_left(your_head['x'], your_head['y'])},
-            {'move': 'right', 'cell_value': board.get_cell_right(your_head['x'], your_head['y'])}
-        ], key=lambda move: move['cell_value'])
-
-        best_moves = []
-        safest_value = possible_moves[0]['cell_value']
-        for possible_move in possible_moves:
-            if possible_move['cell_value'] == safest_value:
-                best_moves.append(possible_move)
-
-        best_move = random.choice(best_moves)
-        print(f"MOVE: {best_move}")
+        jazz_snake = JazzSnake(data)
 
         return {
-            'move': best_move['move']
+            'move': jazz_snake.calculate_move(),
+            'shout': 'tss ts ts tss ts ts tss'
         }
 
     @cherrypy.expose
