@@ -14,12 +14,21 @@ class SnakeLayer:
 
     def visit(self, game_board: GameBoard):
         # TODO More advanced stuff around danger for head
+        head_x = self._snake['head']['x']
+        head_y = self._snake['head']['y']
         game_board.set_cell(
-            self._snake['head']['x'],
-            self._snake['head']['y'],
+            head_x,
+            head_y,
             CellDataType.DEATH_THREAT_LEVEL,
             DeathThreatLevel.SUICIDE
         )
+
+        if self._you['id'] != self._snake['id'] and self._you['length'] <= self._snake['length']:
+            game_board.set_cell(head_x + 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+            game_board.set_cell(head_x - 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+            game_board.set_cell(head_x, head_y + 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+            game_board.set_cell(head_x, head_y - 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+
 
         snake_body = self._snake['body']
         for i in range(self._snake['length']):
