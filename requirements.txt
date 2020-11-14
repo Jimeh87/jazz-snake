@@ -7,7 +7,6 @@ jaraco.text==3.2.0; python_version >= "3.6"
 more-itertools==8.6.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.4.0" and python_version >= "3.6"
 portend==2.6; python_version >= "3.5"
 pytz==2020.4; python_version >= "3.6"
-pywin32==228; sys_platform == "win32" and python_version >= "3.5"
 six==1.15.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.4.0" and python_version >= "3.6"
 tempora==4.0.1; python_version >= "3.6"
 texttable==1.6.3
