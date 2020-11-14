@@ -1,3 +1,5 @@
+import random
+
 from jazz_snake.board.celldatatype import CellDataType
 from jazz_snake.board.gameboard import GameBoard
 from jazz_snake.layer.layerfactory import LayerFactory
@@ -21,13 +23,13 @@ class JazzSnake:
         self._board.print()
 
     def calculate_move(self) -> str:
-
         your_head = self._game_data['you']['head']
 
         possible_moves = self._board.get_neighbour_final_cells(your_head['x'], your_head['y'])
-        possible_moves.sort(key=lambda m: (m['cell'][CellDataType.DEATH_THREAT_LEVEL],
-                                           m['cell'][CellDataType.AVAILABLE_AREA],
-                                           m['cell'][CellDataType.DESIRED_PATH]))
+        random.shuffle(possible_moves)
+        possible_moves = sorted(possible_moves, key=lambda m: (m['cell'][CellDataType.DEATH_THREAT_LEVEL],
+                                                               -m['cell'][CellDataType.AVAILABLE_AREA],
+                                                               m['cell'][CellDataType.DESIRED_PATH]))
 
         JazzSnake.print_cells(possible_moves)
 
@@ -45,7 +47,8 @@ class JazzSnake:
 
         row = []
         for possible_move in possible_moves:
-            row.append("'direction': " + possible_move['direction'] + "\n"
+            row.append(f"'direction': {possible_move['direction']} \n"
+                       + f"'point': {possible_move['point']} \n"
                        + ("\n".join("{!r}: {!r},".format(k.name, v) for k, v in possible_move['cell'].items())))
 
         table.add_row(row)

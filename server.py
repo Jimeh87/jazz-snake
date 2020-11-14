@@ -51,6 +51,10 @@ class Battlesnake(object):
         # Valid moves are "up", "down", "left", or "right".
         # TODO: Use the information in cherrypy.request.json to decide your next move.
         data = cherrypy.request.json
+        print(f"TURN {data['turn']}")
+        print("==============")
+        print("==============")
+
         print(f"DATA: {data}")
 
         jazz_snake = JazzSnake(data)

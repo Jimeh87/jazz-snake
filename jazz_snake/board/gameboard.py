@@ -43,7 +43,7 @@ class GameBoard:
         return cell_data_type.calculate_final_value(self.get_cell(x, y, cell_data_type))
 
     @staticmethod
-    def get_neighbour_cell_points(x, y) -> [()]:
+    def get_neighbour_cell_points(x, y) -> [dict]:
         return [
             {'direction': 'up', 'point': RelativeCell.up(x, y)},
             {'direction': 'down', 'point': RelativeCell.down(x, y)},
@@ -51,7 +51,7 @@ class GameBoard:
             {'direction': 'right', 'point': RelativeCell.right(x, y)},
         ]
 
-    def get_final_cell(self, x, y=None, ) -> dict:
+    def get_final_cell(self, x, y=None) -> dict:
         if y is None:
             y = x[1]
             x = x[0]
@@ -62,12 +62,13 @@ class GameBoard:
         return final_cell
 
     def get_neighbour_final_cells(self, x, y) -> [dict]:
-        return [
-            {'direction': 'up', 'cell': self.get_final_cell(RelativeCell.up(x, y))},
-            {'direction': 'down', 'cell': self.get_final_cell(RelativeCell.down(x, y))},
-            {'direction': 'left', 'cell': self.get_final_cell(RelativeCell.left(x, y))},
-            {'direction': 'right', 'cell': self.get_final_cell(RelativeCell.right(x, y))},
-        ]
+        neighbour_cell_points = self.get_neighbour_cell_points(x, y)
+        neighbour_final_cells = []
+        for neighbour_cell_point in neighbour_cell_points:
+            final_cell = self.get_final_cell(neighbour_cell_point['point'])
+            neighbour_final_cells.append({**{'cell': final_cell}, **neighbour_cell_point})
+
+        return neighbour_final_cells
 
     def get_relative_cell(self, x, y, cell_data_type: CellDataType, mapper):
         relative_cell = mapper(x, y)
