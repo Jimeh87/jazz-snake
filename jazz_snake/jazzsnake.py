@@ -13,8 +13,10 @@ class JazzSnake:
         layer_factory = LayerFactory(game_data)
         self._board = GameBoard(game_data['board']['height'], game_data['board']['width'])
         self._board.accept_layers(
+            layer_factory.create_snake_listener_layer(),
             layer_factory.create_food_layer(),
             layer_factory.create_boundary_layer(),
+            # layer_factory.create_low_risk_zones_layer(),
             layer_factory.create_areas_layer(),
             layer_factory.create_snake_layer(),
             layer_factory.create_direct_path_layer()

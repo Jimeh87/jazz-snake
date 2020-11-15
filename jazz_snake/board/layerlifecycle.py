@@ -2,7 +2,8 @@ from enum import Enum
 
 
 class LayerLifeCycle(Enum):
-    GOALS = 0
-    DEATH_THREAT_ANALYSIS = 1
-    AREA_ANALYSIS = 2
-    PATHING = 3
+    DEBUG = 0
+    GOALS = 1
+    DEATH_THREAT_ANALYSIS = 2
+    AREA_ANALYSIS = 3
+    PATHING = 4
