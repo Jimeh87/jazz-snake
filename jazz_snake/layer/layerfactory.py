@@ -4,7 +4,7 @@ from jazz_snake.layer.boundarylayer import BoundaryLayer
 from jazz_snake.layer.directpathlayer import DirectPathLayer
 from jazz_snake.layer.foodlayer import FoodLayer
 from jazz_snake.layer.lowriskzoneslayer import LowRiskZonesLayer
-from jazz_snake.layer.pathslayer import PathsLayer
+from jazz_snake.layer.path.pathslayer import PathsLayer
 from jazz_snake.layer.snakelayer import SnakeLayer
 from jazz_snake.layer.snakelistenerlayer import SnakeListenerLayer
 from jazz_snake.layer.stepsfrompointlayer import StepsFromPointLayer
