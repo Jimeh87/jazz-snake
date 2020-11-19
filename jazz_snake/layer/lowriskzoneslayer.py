@@ -5,7 +5,7 @@ from jazz_snake.board.gameboard import GameBoard
 
 
 class LowRiskZonesLayer:
-    
+
     LIFE_CYCLE = LayerLifeCycle.DEATH_THREAT_ANALYSIS
 
     def visit(self, game_board: GameBoard):
@@ -15,6 +15,5 @@ class LowRiskZonesLayer:
         max_height = game_board.get_height()
         for x in range(min_width, max_width):
             for y in range(min_height, max_height):
-                if x in (min_width, min_width + 1, max_width - 1, max_width) \
-                        or y in (min_width, min_width + 1, max_width - 1, max_width):
+                if x in (min_width, max_width) or y in (min_height, max_height):
                     game_board.set_cell(x, y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.SMALL)

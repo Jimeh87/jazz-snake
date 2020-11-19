@@ -53,7 +53,6 @@ class Battlesnake(object):
         data = cherrypy.request.json
         print(f"TURN {data['turn']}")
         print("==============")
-        print("==============")
 
         print(f"DATA: {data}")
 

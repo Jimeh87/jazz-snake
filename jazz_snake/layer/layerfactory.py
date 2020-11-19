@@ -1,10 +1,14 @@
+from jazz_snake.board.PointType import PointType
 from jazz_snake.layer.areaslayer import AreasLayer
 from jazz_snake.layer.boundarylayer import BoundaryLayer
 from jazz_snake.layer.directpathlayer import DirectPathLayer
 from jazz_snake.layer.foodlayer import FoodLayer
 from jazz_snake.layer.lowriskzoneslayer import LowRiskZonesLayer
+from jazz_snake.layer.pathslayer import PathsLayer
 from jazz_snake.layer.snakelayer import SnakeLayer
 from jazz_snake.layer.snakelistenerlayer import SnakeListenerLayer
+from jazz_snake.layer.stepsfrompointlayer import StepsFromPointLayer
+from jazz_snake.layer.yourheadlayer import YourHeadLayer
 
 
 class LayerFactory:
@@ -40,3 +44,24 @@ class LayerFactory:
 
     def create_areas_layer(self) -> AreasLayer:
         return AreasLayer(self._game_data['you'])
+
+    def create_steps_from_point_layer(self) -> [StepsFromPointLayer]:
+        layers = []
+
+        for i in range(len(self._game_data['board']['food'])):
+            layers.append(StepsFromPointLayer(self._game_data['board']['food'][i], PointType.FOOD, 'food-' + str(i)))
+
+        for snake in self._game_data['board']['snakes']:
+            layers.append(StepsFromPointLayer(snake['head'], PointType.SNAKE_HEAD, snake['id']))
+
+        layers.append(StepsFromPointLayer(self._game_data['you']['body'][-1],
+                                          PointType.SNAKE_TAIL,
+                                          'tail-' + self._game_data['you']['id']))
+
+        return layers
+
+    def create_your_head_layer(self) -> YourHeadLayer:
+        return YourHeadLayer(self._game_data['you'])
+
+    def create_paths_layer(self) -> PathsLayer:
+        return PathsLayer(self._game_data['you'])

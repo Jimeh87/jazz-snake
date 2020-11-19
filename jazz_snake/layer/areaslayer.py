@@ -16,7 +16,7 @@ class AreasLayer:
 
         head_direction_points = list(map(
             lambda p: p['point'],
-            game_board.get_neighbour_cell_points(self._you_snake_head['x'], self._you_snake_head['y'])
+            game_board.get_neighbour_cell_points_with_direction(self._you_snake_head['x'], self._you_snake_head['y'])
         ))
 
         cell_areas = set()
