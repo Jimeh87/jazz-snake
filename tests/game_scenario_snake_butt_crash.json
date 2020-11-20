@@ -1,0 +1,218 @@
+{
+  "game": {
+    "id": "59cf2a3d-addd-4c79-8efb-345163c09e81",
+    "ruleset": {
+      "name": "standard",
+      "version": "v1.0.14"
+    },
+    "timeout": 500
+  },
+  "turn": 53,
+  "board": {
+    "height": 11,
+    "width": 11,
+    "snakes": [
+      {
+        "id": "gs_64DSxwpdv6D3tgfm9QSppmB9",
+        "name": "The Rusty Tapeworm",
+        "latency": "2",
+        "health": 85,
+        "body": [
+          {
+            "x": 5,
+            "y": 6
+          },
+          {
+            "x": 6,
+            "y": 6
+          },
+          {
+            "x": 6,
+            "y": 5
+          },
+          {
+            "x": 6,
+            "y": 4
+          },
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 2
+          }
+        ],
+        "head": {
+          "x": 5,
+          "y": 6
+        },
+        "length": 7,
+        "shout": "die"
+      },
+      {
+        "id": "gs_4DFcHKctWJ99P3F4tkhwp9w7",
+        "name": "Prüzze",
+        "latency": "413",
+        "health": 69,
+        "body": [
+          {
+            "x": 7,
+            "y": 8
+          },
+          {
+            "x": 7,
+            "y": 7
+          },
+          {
+            "x": 8,
+            "y": 7
+          },
+          {
+            "x": 8,
+            "y": 6
+          },
+          {
+            "x": 9,
+            "y": 6
+          }
+        ],
+        "head": {
+          "x": 7,
+          "y": 8
+        },
+        "length": 5,
+        "shout": ""
+      },
+      {
+        "id": "gs_jVDXDKr3FtywMFxHvSfXWSyb",
+        "name": "Quasar",
+        "latency": "415",
+        "health": 96,
+        "body": [
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "head": {
+          "x": 4,
+          "y": 1
+        },
+        "length": 7,
+        "shout": "A man was hospitalized with 6 plastic horses inside him. The doctor described his condition as stable!"
+      },
+      {
+        "id": "gs_CmTh8hmkk8dRmQFjJbhV4Gwd",
+        "name": "Jazz snake",
+        "latency": "104",
+        "health": 91,
+        "body": [
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 7
+          },
+          {
+            "x": 1,
+            "y": 8
+          },
+          {
+            "x": 2,
+            "y": 8
+          }
+        ],
+        "head": {
+          "x": 2,
+          "y": 5
+        },
+        "length": 6,
+        "shout": "tss ts ts tss ts ts tss"
+      }
+    ],
+    "food": [
+      {
+        "x": 8,
+        "y": 9
+      }
+    ],
+    "hazards": []
+  },
+  "you": {
+    "id": "gs_CmTh8hmkk8dRmQFjJbhV4Gwd",
+    "name": "Jazz snake",
+    "latency": "104",
+    "health": 91,
+    "body": [
+      {
+        "x": 2,
+        "y": 5
+      },
+      {
+        "x": 2,
+        "y": 6
+      },
+      {
+        "x": 1,
+        "y": 6
+      },
+      {
+        "x": 1,
+        "y": 7
+      },
+      {
+        "x": 1,
+        "y": 8
+      },
+      {
+        "x": 2,
+        "y": 8
+      }
+    ],
+    "head": {
+      "x": 2,
+      "y": 5
+    },
+    "length": 6,
+    "shout": "tss ts ts tss ts ts tss"
+  }
+}
