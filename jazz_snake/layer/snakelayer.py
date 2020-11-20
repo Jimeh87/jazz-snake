@@ -22,12 +22,11 @@ class SnakeLayer:
             DeathThreatLevel.SUICIDE
         )
 
-        # TODO I don't think I need this anymore
-        # if self._you['id'] != self._snake['id'] and self._you['length'] <= self._snake['length']:
-        #     game_board.set_cell(head_x + 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
-        #     game_board.set_cell(head_x - 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
-        #     game_board.set_cell(head_x, head_y + 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
-        #     game_board.set_cell(head_x, head_y - 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+        if self._you['id'] != self._snake['id'] and self._you['length'] <= self._snake['length']:
+            game_board.set_cell(head_x + 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+            game_board.set_cell(head_x - 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+            game_board.set_cell(head_x, head_y + 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+            game_board.set_cell(head_x, head_y - 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
 
         snake_body = self._snake['body']
         for i in range(self._snake['length'] - 1):
