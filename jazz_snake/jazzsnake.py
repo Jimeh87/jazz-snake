@@ -1,6 +1,4 @@
-import random
 
-from jazz_snake.board.celldatatype import CellDataType
 from jazz_snake.board.gameboard import GameBoard
 from jazz_snake.layer.layerfactory import LayerFactory
 from texttable import Texttable
@@ -13,31 +11,52 @@ class JazzSnake:
         layer_factory = LayerFactory(game_data)
         self._board = GameBoard(game_data['board']['height'], game_data['board']['width'])
         self._board.accept_layers(
+            layer_factory.create_your_head_layer(),
             layer_factory.create_snake_listener_layer(),
             layer_factory.create_food_layer(),
             layer_factory.create_boundary_layer(),
-            # layer_factory.create_low_risk_zones_layer(),
-            layer_factory.create_areas_layer(),
+            layer_factory.create_low_risk_zones_layer(),
+            layer_factory.create_available_area_path_layer(),
+            layer_factory.create_steps_from_point_layer(),
             layer_factory.create_snake_layer(),
-            layer_factory.create_direct_path_layer()
+            layer_factory.create_direct_path_layer(),
+            layer_factory.create_paths_layer()
         )
 
         # self._board.print()
 
     def calculate_move(self) -> str:
-        your_head = self._game_data['you']['head']
+        paths = self._board.get_paths()
+        if not paths:
+            print("No paths!!! :(")
+            return "up"
 
-        possible_moves = self._board.get_neighbour_final_cells(your_head['x'], your_head['y'])
-        random.shuffle(possible_moves)
-        possible_moves.sort(key=lambda m: (m['cell'][CellDataType.DEATH_THREAT_LEVEL],
-                                           -int(m['cell'][CellDataType.AVAILABLE_AREA] * 1000),
-                                           m['cell'][CellDataType.DESIRED_PATH]))
+        self.print_paths(paths)
+        best_path = paths[0]
 
-        JazzSnake.print_cells(possible_moves)
+        print(f"MOVE: {best_path['direction']}")
+        return best_path['direction']
 
-        print(f"MOVE: {possible_moves[0]['direction']}")
+    @staticmethod
+    def print_paths(paths):
+        table = Texttable()
+        table.set_max_width(400)
+        table.set_cols_align(['l' for _ in range(7)])
+        table.set_cols_valign(['t' for _ in range(7)])
 
-        return possible_moves[0]['direction']
+        table.header(['direction', 'point_type', 'point_id', 'distance', 'points', 'scores', 'final_score'])
+        for path in paths:
+            table.add_row([
+                path['direction'],
+                path['point_type'],
+                path['point_id'],
+                path['distance'],
+                '\n'.join(map(str, path['points'])),
+                '\n'.join(map(str, path['scores'])),
+                path['final_score']
+            ])
+
+        print(table.draw())
 
     @staticmethod
     def print_cells(possible_moves):

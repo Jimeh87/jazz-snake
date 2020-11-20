@@ -1,10 +1,9 @@
-from jazz_snake.board.layerlifecycle import LayerLifeCycle
-from jazz_snake.board.celldatatype import CellDataType
+from jazz_snake.board.pointtype import PointType
 from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.board.layerlifecycle import LayerLifeCycle
 
 
-class AreasLayer:
-
+class AvailableAreaPathLayer:
     LIFE_CYCLE = LayerLifeCycle.AREA_ANALYSIS
 
     def __init__(self, you_snake):
@@ -14,20 +13,26 @@ class AreasLayer:
     def visit(self, game_board: GameBoard):
         cell_area_counter = self.CellAreaCounter(game_board)
 
-        head_direction_points = list(map(
-            lambda p: p['point'],
-            game_board.get_neighbour_cell_points(self._you_snake_head['x'], self._you_snake_head['y'])
-        ))
+        head_directions = game_board.get_neighbour_cell_points_with_direction(self._you_snake_head['x'],
+                                                                              self._you_snake_head['y'])
+        point_id = 0
+        for head_direction in head_directions:
+            point = head_direction['point']
+            cell_count = len(cell_area_counter.count(point))
+            score = game_board.get_total_cells() - cell_count + 10000
+            path = {
+                'direction': head_direction['direction'],
+                'point_type': PointType.AVAILABLE_AREA,
+                'point_id': 'area-' + str(point_id),
+                'distance': cell_count,
+                'points': [point],
+                'scores': [score],
+                'final_score': score
+            }
 
-        cell_areas = set()
-        for head_direction_point in head_direction_points:
-            cell_areas.add(frozenset(cell_area_counter.count(head_direction_point)))
+            game_board.add_path(path)
 
-        for cell_area in cell_areas:
-            coverage = len(cell_area) / float(game_board.get_total_cells())
-
-            for point in cell_area:
-                game_board.set_cell(point[0], point[1], CellDataType.AVAILABLE_AREA, coverage)
+            point_id = point_id + 1
 
     class CellAreaCounter:
 

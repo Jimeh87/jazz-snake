@@ -1,0 +1,190 @@
+{
+  "game": {
+    "id": "3c485878-34f1-4fcc-a73a-f77579ae93e3",
+    "ruleset": {
+      "name": "standard",
+      "version": "v1.0.14"
+    },
+    "timeout": 500
+  },
+  "turn": 25,
+  "board": {
+    "height": 11,
+    "width": 11,
+    "snakes": [
+      {
+        "id": "gs_7hSxvPrtMYDr3KWYKjrbShbR",
+        "name": "local",
+        "latency": "135",
+        "health": 75,
+        "body": [
+          {
+            "x": 4,
+            "y": 7
+          },
+          {
+            "x": 4,
+            "y": 8
+          },
+          {
+            "x": 3,
+            "y": 8
+          }
+        ],
+        "head": {
+          "x": 4,
+          "y": 7
+        },
+        "length": 3,
+        "shout": "tss ts ts tss ts ts tss"
+      },
+      {
+        "id": "gs_xxxjVcqDYjCdXbwB9FK4QjMQ",
+        "name": "Prüzze Bronze",
+        "latency": "62",
+        "health": 91,
+        "body": [
+          {
+            "x": 9,
+            "y": 4
+          },
+          {
+            "x": 9,
+            "y": 5
+          },
+          {
+            "x": 9,
+            "y": 6
+          },
+          {
+            "x": 8,
+            "y": 6
+          }
+        ],
+        "head": {
+          "x": 9,
+          "y": 4
+        },
+        "length": 4,
+        "shout": ""
+      },
+      {
+        "id": "gs_rTW4kWR7Y8GWtxGYkXpMgdRQ",
+        "name": "Prüzze Silver",
+        "latency": "62",
+        "health": 91,
+        "body": [
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          }
+        ],
+        "head": {
+          "x": 8,
+          "y": 3
+        },
+        "length": 6,
+        "shout": ""
+      },
+      {
+        "id": "gs_FSxPrcKdb43TFxTSBkRGCpv8",
+        "name": "Prüzze Gold",
+        "latency": "474",
+        "health": 95,
+        "body": [
+          {
+            "x": 6,
+            "y": 9
+          },
+          {
+            "x": 6,
+            "y": 10
+          },
+          {
+            "x": 5,
+            "y": 10
+          },
+          {
+            "x": 4,
+            "y": 10
+          },
+          {
+            "x": 3,
+            "y": 10
+          },
+          {
+            "x": 2,
+            "y": 10
+          }
+        ],
+        "head": {
+          "x": 6,
+          "y": 9
+        },
+        "length": 6,
+        "shout": ""
+      }
+    ],
+    "food": [
+      {
+        "x": 8,
+        "y": 10
+      },
+      {
+        "x": 10,
+        "y": 2
+      },
+      {
+        "x": 0,
+        "y": 8
+      }
+    ],
+    "hazards": []
+  },
+  "you": {
+    "id": "gs_7hSxvPrtMYDr3KWYKjrbShbR",
+    "name": "local",
+    "latency": "135",
+    "health": 75,
+    "body": [
+      {
+        "x": 4,
+        "y": 7
+      },
+      {
+        "x": 4,
+        "y": 8
+      },
+      {
+        "x": 3,
+        "y": 8
+      }
+    ],
+    "head": {
+      "x": 4,
+      "y": 7
+    },
+    "length": 3,
+    "shout": "tss ts ts tss ts ts tss"
+  }
+}

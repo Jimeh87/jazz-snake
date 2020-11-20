@@ -1,3 +1,5 @@
+import random
+
 from texttable import Texttable
 
 from jazz_snake.board.celldatatype import CellDataType
@@ -10,6 +12,7 @@ class GameBoard:
         self._height = height
         self._width = width
         self._board = GameBoard.create_board(height, width)
+        self._paths = []
 
     @staticmethod
     def create_board(height, width):
@@ -42,8 +45,37 @@ class GameBoard:
     def get_calculated_cell(self, x, y, cell_data_type: CellDataType):
         return cell_data_type.calculate_final_value(self.get_cell(x, y, cell_data_type))
 
+    def get_paths(self):
+        # TODO This is a silly place to do this
+        random.shuffle(self._paths)
+        self._paths.sort(key=lambda p: p['final_score'])
+        return self._paths
+
+    def add_path(self, path: {}):
+        self._paths.append(path)
+
+    def add_paths(self, paths: []):
+        self._paths.extend(paths)
+
     @staticmethod
-    def get_neighbour_cell_points(x, y) -> [dict]:
+    def get_neighbour_cell_points(x, y=None) -> [dict]:
+        if y is None:
+            y = x[1]
+            x = x[0]
+
+        return [
+            RelativeCell.up(x, y),
+            RelativeCell.down(x, y),
+            RelativeCell.left(x, y),
+            RelativeCell.right(x, y)
+        ]
+
+    @staticmethod
+    def get_neighbour_cell_points_with_direction(x, y=None) -> [dict]:
+        if y is None:
+            y = x[1]
+            x = x[0]
+
         return [
             {'direction': 'up', 'point': RelativeCell.up(x, y)},
             {'direction': 'down', 'point': RelativeCell.down(x, y)},
@@ -62,7 +94,7 @@ class GameBoard:
         return final_cell
 
     def get_neighbour_final_cells(self, x, y) -> [dict]:
-        neighbour_cell_points = self.get_neighbour_cell_points(x, y)
+        neighbour_cell_points = self.get_neighbour_cell_points_with_direction(x, y)
         neighbour_final_cells = []
         for neighbour_cell_point in neighbour_cell_points:
             final_cell = self.get_final_cell(neighbour_cell_point['point'])
@@ -78,7 +110,7 @@ class GameBoard:
         self._get_cell(x, y)[cell_data_type].append(value)
 
     def is_cell_safe(self, x, y):
-        return self.get_final_cell(x, y)[CellDataType.DEATH_THREAT_LEVEL] == DeathThreatLevel.SAFE
+        return self.get_final_cell(x, y)[CellDataType.DEATH_THREAT_LEVEL] <= DeathThreatLevel.SMALL
 
     def get_total_cells(self):
         return self._height * self._width
@@ -108,7 +140,8 @@ class GameBoard:
             row = []
             for x in width_range:
                 cell = self._get_cell(x, y)
-                row.append("'point': (" + str(x) + "," + str(y) + ")\n" + ("\n".join("{!r}: {!r},".format(k.name, v) for k, v in cell.items())))
+                row.append("'POINT': (" + str(x) + "," + str(y) + ")\n"
+                           + ("\n".join("{!r}: {!r},".format(k.name, v) for k, v in cell.items())))
             table.add_row(row)
 
         print(table.draw())
