@@ -7,12 +7,13 @@ from jazz_snake.board.gameboard import GameBoard
 
 class PathScorer:
 
-    def __init__(self, point: (), current_distance, path_step, game_board: GameBoard, you_snake_id):
+    def __init__(self, point: (), current_distance, path_step, game_board: GameBoard, you_snake_id, you_snake_health):
         self.point = point
         self.current_distance = current_distance
         self.path_step = path_step
         self.game_board = game_board
         self.you_snake_id = you_snake_id
+        self.you_snake_health = you_snake_health
 
     def get_death_threat_level(self):
         return self.game_board.get_final_cell(self.point[0], self.point[1])[CellDataType.DEATH_THREAT_LEVEL]
@@ -29,6 +30,11 @@ class PathScorer:
     @staticmethod
     @abstractmethod
     def can_score_path(step):
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def calculate_final_score(distance, scores):
         pass
 
     @abstractmethod

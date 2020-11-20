@@ -11,13 +11,14 @@ class PathFollower:
                  game_board: GameBoard,
                  point_type: PointType,
                  point_id, distance,
-                 you_snake_id,
+                 you,
                  path_scorer_class):
         self._game_board = game_board
         self._point_type = point_type
         self._point_id = point_id
         self._distance = distance
-        self._you_snake_id = you_snake_id
+        self._you_snake_id = you['id']
+        self._you_snake_health = you['health']
         self._path_scorer_class = path_scorer_class
 
     def score_path(self, direction, start_point):
@@ -48,7 +49,7 @@ class PathFollower:
                 if possible_next_path_step['distance'] < path_step['distance']:
                     next_points.append(possible_next_point)
 
-        path['final_score'] = sum(path['scores']) / (self._distance + 1)
+        path['final_score'] = self._path_scorer_class.calculate_final_score(self._distance, path['scores'])
 
         return path
 
@@ -76,4 +77,5 @@ class PathFollower:
                                        current_distance=current_distance,
                                        path_step=self.find_path_step(point),
                                        game_board=self._game_board,
-                                       you_snake_id=self._you_snake_id).score_path()
+                                       you_snake_id=self._you_snake_id,
+                                       you_snake_health=self._you_snake_health).score_path()

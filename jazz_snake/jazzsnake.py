@@ -1,6 +1,4 @@
-import random
 
-from jazz_snake.board.celldatatype import CellDataType
 from jazz_snake.board.gameboard import GameBoard
 from jazz_snake.layer.layerfactory import LayerFactory
 from texttable import Texttable
@@ -26,7 +24,6 @@ class JazzSnake:
         )
 
         # self._board.print()
-        # self._board.print_paths()
 
     def calculate_move(self) -> str:
         paths = self._board.get_paths()
@@ -34,11 +31,32 @@ class JazzSnake:
             print("No paths!!! :(")
             return "up"
 
-        self._board.print_paths()
+        self.print_paths(paths)
         best_path = paths[0]
 
         print(f"MOVE: {best_path['direction']}")
         return best_path['direction']
+
+    @staticmethod
+    def print_paths(paths):
+        table = Texttable()
+        table.set_max_width(400)
+        table.set_cols_align(['l' for _ in range(7)])
+        table.set_cols_valign(['t' for _ in range(7)])
+
+        table.header(['direction', 'point_type', 'point_id', 'distance', 'points', 'scores', 'final_score'])
+        for path in paths:
+            table.add_row([
+                path['direction'],
+                path['point_type'],
+                path['point_id'],
+                path['distance'],
+                '\n'.join(map(str, path['points'])),
+                '\n'.join(map(str, path['scores'])),
+                path['final_score']
+            ])
+
+        print(table.draw())
 
     @staticmethod
     def print_cells(possible_moves):

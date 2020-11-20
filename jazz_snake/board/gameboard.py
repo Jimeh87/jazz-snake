@@ -146,26 +146,6 @@ class GameBoard:
 
         print(table.draw())
 
-    def print_paths(self):
-        table = Texttable()
-        table.set_max_width(400)
-        table.set_cols_align(['l' for _ in range(7)])
-        table.set_cols_valign(['t' for _ in range(7)])
-
-        table.header(['direction', 'point_type', 'point_id', 'distance', 'points', 'scores', 'final_score'])
-        for path in self._paths:
-            table.add_row([
-                path['direction'],
-                path['point_type'],
-                path['point_id'],
-                path['distance'],
-                '\n'.join(map(str, path['points'])),
-                '\n'.join(map(str, path['scores'])),
-                path['final_score']
-            ])
-
-        print(table.draw())
-
 
 class RelativeCell:
     @staticmethod

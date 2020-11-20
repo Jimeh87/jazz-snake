@@ -29,7 +29,7 @@ class PathsLayer:
                                                      step['point_type'],
                                                      step['point_id'],
                                                      step['distance'],
-                                                     self._you['id'],
+                                                     self._you,
                                                      path_scorer)
                         paths.append(path_follower.score_path(direction, start_point))
 
