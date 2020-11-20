@@ -1,11 +1,12 @@
-from jazz_snake.board.PointType import PointType
+from jazz_snake.board.pointtype import PointType
 from jazz_snake.layer.path.pathscorer import PathScorer
 
 
 class FootPathScorer(PathScorer):
 
-    def can_score_path(self):
-        return self.path_step['point_type'] == PointType.FOOD
+    @staticmethod
+    def can_score_path(step):
+        return step['point_type'] == PointType.FOOD
 
     def score_path(self):
         score = 0

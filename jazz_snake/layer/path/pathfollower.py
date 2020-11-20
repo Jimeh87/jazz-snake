@@ -1,9 +1,8 @@
 import random
 
-from jazz_snake.board.PointType import PointType
+from jazz_snake.board.pointtype import PointType
 from jazz_snake.board.celldatatype import CellDataType
 from jazz_snake.board.gameboard import GameBoard
-from jazz_snake.layer.path.pathscorer import PathScorer
 
 
 class PathFollower:
@@ -28,7 +27,8 @@ class PathFollower:
             'point_id': self._point_id,
             'distance': self._distance,
             'points': [],
-            'scores': []
+            'scores': [],
+            'final_score': None
         }
 
         current_distance = 0

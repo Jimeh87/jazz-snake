@@ -1,15 +1,8 @@
 import os
-import random
 
 import cherrypy
 
 from jazz_snake.jazzsnake import JazzSnake
-from jazz_snake.layer.areaslayer import AreasLayer
-from jazz_snake.layer.boundarylayer import BoundaryLayer
-from jazz_snake.layer.directpathlayer import DirectPathLayer
-from jazz_snake.layer.foodlayer import FoodLayer
-from jazz_snake.board.gameboard import GameBoard
-from jazz_snake.layer.snakelayer import SnakeLayer
 
 """
 This is a simple Battlesnake server written in Python.

@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from jazz_snake.board.PointType import PointType
+from jazz_snake.board.pointtype import PointType
 from jazz_snake.board.celldatatype import CellDataType
 from jazz_snake.board.gameboard import GameBoard
 
@@ -26,8 +26,9 @@ class PathScorer:
     def is_your_tail_step(self, step):
         return step['point_type'] == PointType.SNAKE_TAIL and step['point_id'] == 'tail-' + self.you_snake_id
 
+    @staticmethod
     @abstractmethod
-    def can_score_path(self):
+    def can_score_path(step):
         pass
 
     @abstractmethod

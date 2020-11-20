@@ -1,3 +1,5 @@
+import random
+
 from texttable import Texttable
 
 from jazz_snake.board.celldatatype import CellDataType
@@ -44,7 +46,13 @@ class GameBoard:
         return cell_data_type.calculate_final_value(self.get_cell(x, y, cell_data_type))
 
     def get_paths(self):
+        # TODO This is a silly place to do this
+        random.shuffle(self._paths)
+        self._paths.sort(key=lambda p: p['final_score'])
         return self._paths
+
+    def add_path(self, path: {}):
+        self._paths.append(path)
 
     def add_paths(self, paths: []):
         self._paths.extend(paths)

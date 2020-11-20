@@ -15,5 +15,5 @@ class LowRiskZonesLayer:
         max_height = game_board.get_height()
         for x in range(min_width, max_width):
             for y in range(min_height, max_height):
-                if x in (min_width, max_width) or y in (min_height, max_height):
+                if x in (min_width, max_width - 1) or y in (min_height, max_height - 1):
                     game_board.set_cell(x, y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.SMALL)
