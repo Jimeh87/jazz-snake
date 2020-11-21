@@ -34,14 +34,15 @@ class GoalLayer:
             'point': (int(game_board.get_width() / 2), int(game_board.get_height() / 2))
         })
 
-        for snake in self._snakes:
-            if snake['length'] < self._you['length']:
-                points = self.find_lowest_overlapping_points(game_board, self._you['id'], snake['id'])
-                for point in points:
-                    game_board.add_goal({
-                        'type': GoalType.HEAD_ATTACK,
-                        'point': point
-                    })
+        if self._you['length'] > 8:
+            for snake in self._snakes:
+                if snake['length'] < self._you['length']:
+                    points = self.find_lowest_overlapping_points(game_board, self._you['id'], snake['id'])
+                    for point in points:
+                        game_board.add_goal({
+                            'type': GoalType.HEAD_ATTACK,
+                            'point': point
+                        })
 
     def find_lowest_overlapping_points(self, game_board: GameBoard, snake1_id, snake2_id):
         lowest_distance = game_board.get_width() * game_board.get_height()
