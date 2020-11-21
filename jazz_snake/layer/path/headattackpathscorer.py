@@ -14,7 +14,7 @@ class HeadAttackPathScorer(PathScorer):
         return goal_type == GoalType.HEAD_ATTACK and step.is_on_path(PointType.SNAKE_HEAD, you_snake_id)
 
     def score_path(self):
-        score = 10
+        score = 60
 
         if not self.is_head_attack_goal_on_point():
             score = score + (self.get_death_threat_level() * 100)
@@ -28,7 +28,7 @@ class HeadAttackPathScorer(PathScorer):
                     if other_snake_distance < self.path_step.distance:
                         score = score + 10
                     elif other_snake_distance == self.path_step.distance:
-                        score = score + 5
+                        score = score + 10
                     else:
                         score = score - 1
 

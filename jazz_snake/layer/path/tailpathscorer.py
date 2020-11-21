@@ -25,9 +25,9 @@ class TailPathScorer(PathScorer):
                 if step.point_id != self.you_snake_id:
                     other_snake_distance = step.distance
                     if other_snake_distance < self.path_step.distance:
-                        score = score + 50
+                        score = score + 60
                     elif other_snake_distance == self.path_step.distance:
-                        score = score + 50
+                        score = score + 60
                     else:
                         score = score - 1
 
