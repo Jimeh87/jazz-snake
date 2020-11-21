@@ -14,8 +14,14 @@ class PathScorer:
         self.you_snake_id = you_snake_id
         self.you_snake_health = you_snake_health
 
+    def is_head_attack_goal_on_point(self):
+        for goal in self.game_board.get_goals():
+            if goal['type'] == GoalType.HEAD_ATTACK and goal['point'] == self.point:
+                return True
+        return False
+
     def get_death_threat_level(self):
-        # FIXME: Temp hack to keep snake tail checks working
+        # FIXME: hack to keep snake tail checks working which is traversed backwards
         distance = None if self.path_step.point_type == PointType.SNAKE_TAIL else self.path_step.distance
         return self.game_board.get_cell_death_threat(self.point).get_death_threat_level(distance)
 

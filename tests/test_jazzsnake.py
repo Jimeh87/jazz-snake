@@ -93,3 +93,13 @@ class TestJazzSnake(unittest.TestCase):
         jazz_snake = JazzSnake(game_data)
 
         self.assertEqual("left", jazz_snake.calculate_move())
+
+    def test_attack(self):
+        with open('game_scenario_attack.json') as file:
+            data = file.read().replace('\n', '')
+
+        game_data = json.loads(data)
+
+        jazz_snake = JazzSnake(game_data)
+
+        self.assertIn(jazz_snake.calculate_move(), ["up", "right"])

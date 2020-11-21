@@ -16,7 +16,8 @@ class HeadAttackPathScorer(PathScorer):
     def score_path(self):
         score = 10
 
-        score = score + (self.get_death_threat_level() * 100)
+        if not self.is_head_attack_goal_on_point():
+            score = score + (self.get_death_threat_level() * 100)
 
         for step in self.get_steps():
             if self.path_step.is_same_path(step):

@@ -52,8 +52,10 @@ class GoalLayer:
                 snake2_step = game_board.get_cell_steps((x, y)).get(PointType.SNAKE_HEAD, snake2_id)
                 if snake1_step is not None and snake2_step is not None and snake1_step.distance == snake2_step.distance:
                     if snake1_step.distance == lowest_distance:
+                        lowest_distance = snake1_step.distance
                         points.append((x, y))
                     elif snake1_step.distance < lowest_distance:
+                        lowest_distance = snake1_step.distance
                         points = [(x, y)]
 
         return points
