@@ -83,3 +83,13 @@ class TestJazzSnake(unittest.TestCase):
         game_data = json.loads(data)
 
         JazzSnake(game_data).calculate_move()
+
+    def test_dont_go_to_middle(self):
+        with open('game_scenario_dont_go_to_middle.json') as file:
+            data = file.read().replace('\n', '')
+
+        game_data = json.loads(data)
+
+        jazz_snake = JazzSnake(game_data)
+
+        self.assertEqual("left", jazz_snake.calculate_move())

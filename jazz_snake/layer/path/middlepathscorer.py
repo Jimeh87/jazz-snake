@@ -31,6 +31,9 @@ class MiddlePathScorer(PathScorer):
                     else:
                         score = score - 1
 
+        if not self.has_your_tail_in_path():
+            score = score + 500
+
         if score < 0:
             score = 1
 
