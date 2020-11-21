@@ -76,3 +76,10 @@ class TestJazzSnake(unittest.TestCase):
 
         self.assertEqual("down", jazz_snake.calculate_move())
 
+    def test_shouldnt_crash_on_print(self):
+        with open('game_scenario_invalid_path.json') as file:
+            data = file.read().replace('\n', '')
+
+        game_data = json.loads(data)
+
+        JazzSnake(game_data).calculate_move()

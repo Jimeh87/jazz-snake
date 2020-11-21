@@ -24,7 +24,11 @@ class PathsLayer:
                                                      self._you,
                                                      path_scorer)
 
-                        game_board.add_path(path_follower.score_path(goal['point']))
+                        path = path_follower.score_path(goal['point'])
+                        if path['distance'] == 0:
+                            print(f"Unexpected path distance of zero for {goal} and {path}")
+                        else:
+                            game_board.add_path(path_follower.score_path(goal['point']))
 
         # paths = []
         # for point_with_direction in points_with_directions:

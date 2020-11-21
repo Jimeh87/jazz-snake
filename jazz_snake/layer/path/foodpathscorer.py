@@ -18,17 +18,11 @@ class FoodPathScorer(PathScorer):
 
         score = score + (self.get_death_threat_level() * 100)
 
-        if self.you_snake_health < 15:
-            score = score - 500
-
         for step in self.get_steps():
             if self.path_step.is_same_path(step):
                 continue
 
-            if step.point_type == PointType.FOOD:
-                # alternative food on path
-                score = score - 1
-            elif step.point_type == PointType.SNAKE_HEAD:
+            if step.point_type == PointType.SNAKE_HEAD:
                 if not step.is_on_path(PointType.SNAKE_HEAD, self.you_snake_id):
                     other_snake_distance = step.distance
                     if other_snake_distance < self.path_step.distance:
@@ -46,4 +40,7 @@ class FoodPathScorer(PathScorer):
 
         if score < 0:
             score = 1
+
+        if self.you_snake_health < 15:
+            score = score - 100
         return score * (1 + (1 / float(self.path_step.distance)))

@@ -26,3 +26,8 @@ class GoalLayer:
             'type': GoalType.TAIL,
             'point': (tail['x'], tail['y'])
         })
+
+        game_board.add_goal({
+            'type': GoalType.CENTER,
+            'point': (int(game_board.get_width() / 2), int(game_board.get_height() / 2))
+        })

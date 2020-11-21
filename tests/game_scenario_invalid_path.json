@@ -1,0 +1,174 @@
+{
+  "game": {
+    "id": "af78ff25-3e65-4b08-806f-7efc5483c304",
+    "ruleset": {
+      "name": "standard",
+      "version": "v1.0.15"
+    },
+    "timeout": 500
+  },
+  "turn": 34,
+  "board": {
+    "height": 11,
+    "width": 11,
+    "snakes": [
+      {
+        "id": "gs_99mdXjddgrcRRqBrcYM38CG8",
+        "name": "local",
+        "latency": "178",
+        "health": 93,
+        "body": [
+          {
+            "x": 5,
+            "y": 5
+          },
+          {
+            "x": 5,
+            "y": 6
+          },
+          {
+            "x": 5,
+            "y": 7
+          },
+          {
+            "x": 5,
+            "y": 8
+          },
+          {
+            "x": 5,
+            "y": 9
+          },
+          {
+            "x": 4,
+            "y": 9
+          },
+          {
+            "x": 4,
+            "y": 8
+          },
+          {
+            "x": 4,
+            "y": 7
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "head": {
+          "x": 5,
+          "y": 5
+        },
+        "length": 10,
+        "shout": "tss ts ts tss ts ts tss"
+      },
+      {
+        "id": "gs_G6KcqrxdqKxCMVW8mCDbRqf3",
+        "name": "Jazz snake",
+        "latency": "94",
+        "health": 97,
+        "body": [
+          {
+            "x": 7,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 4
+          },
+          {
+            "x": 8,
+            "y": 5
+          },
+          {
+            "x": 7,
+            "y": 5
+          },
+          {
+            "x": 7,
+            "y": 4
+          },
+          {
+            "x": 6,
+            "y": 4
+          }
+        ],
+        "head": {
+          "x": 7,
+          "y": 3
+        },
+        "length": 7,
+        "shout": "tss ts ts tss ts ts tss"
+      }
+    ],
+    "food": [
+      {
+        "x": 3,
+        "y": 1
+      }
+    ],
+    "hazards": []
+  },
+  "you": {
+    "id": "gs_99mdXjddgrcRRqBrcYM38CG8",
+    "name": "local",
+    "latency": "178",
+    "health": 93,
+    "body": [
+      {
+        "x": 5,
+        "y": 5
+      },
+      {
+        "x": 5,
+        "y": 6
+      },
+      {
+        "x": 5,
+        "y": 7
+      },
+      {
+        "x": 5,
+        "y": 8
+      },
+      {
+        "x": 5,
+        "y": 9
+      },
+      {
+        "x": 4,
+        "y": 9
+      },
+      {
+        "x": 4,
+        "y": 8
+      },
+      {
+        "x": 4,
+        "y": 7
+      },
+      {
+        "x": 4,
+        "y": 6
+      },
+      {
+        "x": 4,
+        "y": 5
+      }
+    ],
+    "head": {
+      "x": 5,
+      "y": 5
+    },
+    "length": 10,
+    "shout": "tss ts ts tss ts ts tss"
+  }
+}
