@@ -17,8 +17,9 @@ class AvailableAreaPathLayer:
         point_id = 0
         for neighbour_point in neighbour_points:
             cell_count = len(cell_area.collect(neighbour_point))
-            score = game_board.get_total_cells() - cell_count + 300
+            score = game_board.get_total_cells() - cell_count + 700
             path = {
+                'goal_type': None,
                 'point_type': PointType.AVAILABLE_AREA,
                 'point_id': 'area-' + str(point_id),
                 'distance': cell_count,

@@ -2,6 +2,7 @@ import random
 from typing import Type
 
 from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.board.goaltype import GoalType
 from jazz_snake.board.stepdata import StepData, PointType
 from jazz_snake.layer.path.pathscorer import PathScorer
 
@@ -10,12 +11,14 @@ class PathFollower:
 
     def __init__(self,
                  game_board: GameBoard,
+                 goal_type: GoalType,
                  point_type: PointType,
                  point_id,
                  distance,
                  you,
                  path_scorer_class: Type[PathScorer]):
         self._game_board = game_board
+        self._goal_type = goal_type
         self._point_type = point_type
         self._point_id = point_id
         self._distance = distance
@@ -25,6 +28,7 @@ class PathFollower:
 
     def score_path(self, start_point):
         path = {
+            'goal_type': self._goal_type,
             'point_type': self._point_type,
             'point_id': self._point_id,
             'distance': self._distance,

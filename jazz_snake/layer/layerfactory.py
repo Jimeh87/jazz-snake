@@ -5,6 +5,7 @@ from jazz_snake.layer.goallayer import GoalLayer
 from jazz_snake.layer.lowriskzoneslayer import LowRiskZonesLayer
 from jazz_snake.layer.path.availableareapathlayer import AvailableAreaPathLayer
 from jazz_snake.layer.path.foodpathscorer import FoodPathScorer
+from jazz_snake.layer.path.headattackpathscorer import HeadAttackPathScorer
 from jazz_snake.layer.path.middlepathscorer import MiddlePathScorer
 from jazz_snake.layer.path.pathslayer import PathsLayer
 from jazz_snake.layer.path.tailpathscorer import TailPathScorer
@@ -67,4 +68,4 @@ class LayerFactory:
         return YourHeadLayer(self._game_data['you'])
 
     def create_paths_layer(self) -> PathsLayer:
-        return PathsLayer(self._game_data['you'], [FoodPathScorer, TailPathScorer, MiddlePathScorer])
+        return PathsLayer(self._game_data['you'], [FoodPathScorer, TailPathScorer, MiddlePathScorer, HeadAttackPathScorer])

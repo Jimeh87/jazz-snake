@@ -18,6 +18,7 @@ class PathsLayer:
 
                     if path_scorer.can_score_path(step, goal['type'], self._you['id']):
                         path_follower = PathFollower(game_board,
+                                                     goal['type'],
                                                      step.point_type,
                                                      step.point_id,
                                                      step.distance,

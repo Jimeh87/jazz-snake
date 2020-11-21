@@ -22,7 +22,7 @@ class SnakeLayer:
             for head_direction in RelativePoint.get_neighbour_points((head_x, head_y)):
                 game_board.set_cell(head_direction,
                                     CellDataType.DEATH_THREAT_LEVEL,
-                                    DeathThreatData(DeathThreatLevel.SUICIDE, 1))
+                                    DeathThreatData(DeathThreatLevel.EXTREME, 1))
 
         snake_body = self._snake['body']
         for i in range(self._snake['length'] - 1):
