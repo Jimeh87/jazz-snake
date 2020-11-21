@@ -1,3 +1,5 @@
+from random import random, randrange
+
 from jazz_snake.board.celldatatype import CellDataType
 from jazz_snake.board.gameboard import GameBoard
 from jazz_snake.board.goaltype import GoalType
@@ -29,9 +31,13 @@ class GoalLayer:
             'point': (tail['x'], tail['y'])
         })
 
+        half_width = int(game_board.get_width() / 2)
+        half_height = int(game_board.get_height() / 2)
+        width_rand = randrange(int(-half_width / 2), int(half_width / 2))
+        height_rand = randrange(int(-half_height / 2), int(half_height / 2))
         game_board.add_goal({
             'type': GoalType.CENTER,
-            'point': (int(game_board.get_width() / 2), int(game_board.get_height() / 2))
+            'point': (half_width + width_rand, half_height + height_rand)
         })
 
         if self._you['length'] > 8:
