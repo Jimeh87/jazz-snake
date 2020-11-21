@@ -27,7 +27,7 @@ class JazzSnake:
             layer_factory.create_paths_layer()
         )
 
-        self._board.print()
+        # self._board.print()
 
     def calculate_move(self) -> str:
 
