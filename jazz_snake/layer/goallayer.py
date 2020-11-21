@@ -39,8 +39,28 @@ class GoalLayer:
             'type': GoalType.CENTER,
             'point': (half_width + width_rand, half_height + height_rand)
         })
-
-        if self._you['length'] > 8:
+        if self._you['length'] < 8:
+            quarter_width = int(game_board.get_width() / 4)
+            quarter_height = int(game_board.get_height() / 4)
+            quarter_width_rand = randrange(int(-half_width / 4), int(half_width / 4))
+            quarter_height_rand = randrange(int(-half_height / 4), int(half_height / 4))
+            game_board.add_goal({
+                'type': GoalType.CENTER,
+                'point': (quarter_width + quarter_width_rand, quarter_height + quarter_height_rand)
+            })
+            game_board.add_goal({
+                'type': GoalType.CENTER,
+                'point': ((quarter_width * 3) + quarter_width_rand, quarter_height + quarter_height_rand)
+            })
+            game_board.add_goal({
+                'type': GoalType.CENTER,
+                'point': (quarter_width + quarter_width_rand, (quarter_height * 3) + quarter_height_rand)
+            })
+            game_board.add_goal({
+                'type': GoalType.CENTER,
+                'point': ((quarter_width * 3) + quarter_width_rand, (quarter_height * 3) + quarter_height_rand)
+            })
+        else:
             for snake in self._snakes:
                 if snake['length'] < self._you['length']:
                     points = self.find_lowest_overlapping_points(game_board, self._you['id'], snake['id'])
