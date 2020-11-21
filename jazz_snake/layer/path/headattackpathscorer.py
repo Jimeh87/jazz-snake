@@ -7,7 +7,7 @@ class HeadAttackPathScorer(PathScorer):
 
     @staticmethod
     def calculate_final_score(distance, scores):
-        return max(scores) + distance * 10
+        return max(scores) + distance * 20
 
     @staticmethod
     def can_score_path(step: StepData, goal_type: GoalType, you_snake_id):
