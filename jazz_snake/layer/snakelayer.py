@@ -1,7 +1,7 @@
-from jazz_snake.board.layerlifecycle import LayerLifeCycle
 from jazz_snake.board.celldatatype import CellDataType
-from jazz_snake.board.deaththreatlevel import DeathThreatLevel
-from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.board.deaththreatdata import DeathThreatData, DeathThreatLevel
+from jazz_snake.board.gameboard import GameBoard, RelativePoint
+from jazz_snake.board.layerlifecycle import LayerLifeCycle
 
 
 class SnakeLayer:
@@ -12,27 +12,20 @@ class SnakeLayer:
         self._you = you
 
     def visit(self, game_board: GameBoard):
-        # TODO More advanced stuff around danger for head
         head_x = self._snake['head']['x']
         head_y = self._snake['head']['y']
-        game_board.set_cell(
-            head_x,
-            head_y,
-            CellDataType.DEATH_THREAT_LEVEL,
-            DeathThreatLevel.SUICIDE
-        )
+        game_board.set_cell((head_x, head_y),
+                            CellDataType.DEATH_THREAT_LEVEL,
+                            DeathThreatData(DeathThreatLevel.SUICIDE))
 
         if self._you['id'] != self._snake['id'] and self._you['length'] <= self._snake['length']:
-            game_board.set_cell(head_x + 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
-            game_board.set_cell(head_x - 1, head_y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
-            game_board.set_cell(head_x, head_y + 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
-            game_board.set_cell(head_x, head_y - 1, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.EXTREME)
+            for head_direction in RelativePoint.get_neighbour_points((head_x, head_y)):
+                game_board.set_cell(head_direction,
+                                    CellDataType.DEATH_THREAT_LEVEL,
+                                    DeathThreatData(DeathThreatLevel.EXTREME, 1))
 
         snake_body = self._snake['body']
         for i in range(self._snake['length'] - 1):
-            game_board.set_cell(
-                snake_body[i]['x'],
-                snake_body[i]['y'],
-                CellDataType.DEATH_THREAT_LEVEL,
-                DeathThreatLevel.SUICIDE
-            )
+            game_board.set_cell((snake_body[i]['x'], snake_body[i]['y']),
+                                CellDataType.DEATH_THREAT_LEVEL,
+                                DeathThreatData(DeathThreatLevel.SUICIDE, self._snake['length'] - i))

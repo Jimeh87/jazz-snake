@@ -1,6 +1,6 @@
-from jazz_snake.board.pointtype import PointType
-from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.board.gameboard import GameBoard, RelativePoint
 from jazz_snake.board.layerlifecycle import LayerLifeCycle
+from jazz_snake.board.stepdata import PointType
 
 
 class AvailableAreaPathLayer:
@@ -11,21 +11,18 @@ class AvailableAreaPathLayer:
         self._you_snake_body = you_snake['body']
 
     def visit(self, game_board: GameBoard):
-        cell_area_counter = self.CellAreaCounter(game_board)
+        cell_area = self.CellArea(game_board)
 
-        head_directions = game_board.get_neighbour_cell_points_with_direction(self._you_snake_head['x'],
-                                                                              self._you_snake_head['y'])
+        neighbour_points = RelativePoint.get_neighbour_points((self._you_snake_head['x'], self._you_snake_head['y']))
         point_id = 0
-        for head_direction in head_directions:
-            point = head_direction['point']
-            cell_count = len(cell_area_counter.count(point))
+        for neighbour_point in neighbour_points:
+            cell_count = len(cell_area.collect(neighbour_point))
             score = game_board.get_total_cells() - cell_count + 10000
             path = {
-                'direction': head_direction['direction'],
                 'point_type': PointType.AVAILABLE_AREA,
                 'point_id': 'area-' + str(point_id),
                 'distance': cell_count,
-                'points': [point],
+                'points': [neighbour_point],
                 'scores': [score],
                 'final_score': score
             }
@@ -34,31 +31,26 @@ class AvailableAreaPathLayer:
 
             point_id = point_id + 1
 
-    class CellAreaCounter:
+    class CellArea:
 
         def __init__(self, game_board: GameBoard):
             self._game_board = game_board
 
-        def count(self, cell: (), cells=None):
-            if cells is None:
-                cells = set()
+        def collect(self, point: (), points=None):
+            if points is None:
+                points = set()
 
-            if cell in cells:
-                return cells
+            if point in points:
+                return points
 
-            if not self._game_board.is_cell_safe(cell[0], cell[1]):
-                return cells
+            if not self._game_board.get_cell_death_threat(point).is_cell_safe():
+                return points
 
-            cells.add(cell)
+            points.add(point)
 
-            next_cells = [
-                (cell[0], cell[1] + 1),
-                (cell[0], cell[1] - 1),
-                (cell[0] + 1, cell[1]),
-                (cell[0] - 1, cell[1])
-            ]
+            next_points = RelativePoint.get_neighbour_points(point)
 
-            for next_cell in next_cells:
-                self.count(next_cell, cells)
+            for next_point in next_points:
+                self.collect(next_point, points)
 
-            return cells
+            return points

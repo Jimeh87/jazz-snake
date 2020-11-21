@@ -1,9 +1,9 @@
-from jazz_snake.board.pointtype import PointType
-from jazz_snake.layer.path.availableareapathlayer import AvailableAreaPathLayer
+from jazz_snake.board.stepdata import PointType
 from jazz_snake.layer.boundarylayer import BoundaryLayer
 from jazz_snake.layer.directpathlayer import DirectPathLayer
-from jazz_snake.layer.foodlayer import FoodLayer
+from jazz_snake.layer.goallayer import GoalLayer
 from jazz_snake.layer.lowriskzoneslayer import LowRiskZonesLayer
+from jazz_snake.layer.path.availableareapathlayer import AvailableAreaPathLayer
 from jazz_snake.layer.path.foodpathscorer import FoodPathScorer
 from jazz_snake.layer.path.pathslayer import PathsLayer
 from jazz_snake.layer.path.tailpathscorer import TailPathScorer
@@ -18,8 +18,8 @@ class LayerFactory:
     def __init__(self, game_data):
         self._game_data = game_data
 
-    def create_food_layer(self) -> FoodLayer:
-        return FoodLayer(self._game_data['board']['food'])
+    def create_goal_layer(self) -> GoalLayer:
+        return GoalLayer(self._game_data)
 
     def create_snake_listener_layer(self) -> SnakeListenerLayer:
         return SnakeListenerLayer(self._game_data['board']['snakes'])
@@ -50,8 +50,8 @@ class LayerFactory:
     def create_steps_from_point_layer(self) -> [StepsFromPointLayer]:
         layers = []
 
-        for i in range(len(self._game_data['board']['food'])):
-            layers.append(StepsFromPointLayer(self._game_data['board']['food'][i], PointType.FOOD, 'food-' + str(i)))
+        # for i in range(len(self._game_data['board']['food'])):
+        #     layers.append(StepsFromPointLayer(self._game_data['board']['food'][i], PointType.FOOD, 'food-' + str(i)))
 
         for snake in self._game_data['board']['snakes']:
             layers.append(StepsFromPointLayer(snake['head'], PointType.SNAKE_HEAD, snake['id']))

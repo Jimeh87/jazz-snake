@@ -1,8 +1,9 @@
 from math import copysign
 
-from jazz_snake.board.layerlifecycle import LayerLifeCycle
 from jazz_snake.board.celldatatype import CellDataType
 from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.board.layerlifecycle import LayerLifeCycle
+from jazz_snake.board.simpledata import SimpleData
 
 
 class DirectPathLayer:
@@ -22,7 +23,7 @@ class DirectPathLayer:
         steps, safe_path = self.safe_direct_snake_path(game_board, bresenham_path)
 
         for cell in safe_path:
-            game_board.set_cell(cell['x'], cell['y'], CellDataType.DESIRED_PATH, steps)
+            game_board.set_cell((cell['x'], cell['y']), CellDataType.DESIRED_PATH, SimpleData(steps))
 
     @staticmethod
     def safe_direct_snake_path(game_board: GameBoard, bresenham_path) -> (int, []):
@@ -32,7 +33,6 @@ class DirectPathLayer:
 
         for current in bresenham_path:
             if previous is None:
-                # Snake head which is part of the path
                 previous = current
                 continue
 
@@ -46,7 +46,7 @@ class DirectPathLayer:
 
                 safe_options = []
                 for option in options:
-                    if game_board.is_cell_safe(option['x'], option['y']):
+                    if game_board.get_cell_death_threat((option['x'], option['y'])).is_cell_safe():
                         safe_options.append(option)
                 if len(safe_options) == 0:
                     return 0, []
@@ -54,7 +54,7 @@ class DirectPathLayer:
                 steps += 1
                 path.extend(safe_options)
 
-            if not game_board.is_cell_safe(current['x'], current['y']):
+            if not game_board.get_cell_death_threat((current['x'], current['y'])).is_cell_safe():
                 return 0, []
 
             steps += 1

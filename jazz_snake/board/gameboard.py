@@ -1,9 +1,12 @@
 import random
+from functools import reduce
 
 from texttable import Texttable
 
 from jazz_snake.board.celldatatype import CellDataType
-from jazz_snake.board.deaththreatlevel import DeathThreatLevel
+from jazz_snake.board.deaththreatdata import DeathThreatDataAggregate
+from jazz_snake.board.gameboarddata import GameBoardDataAggregate, GameBoardData
+from jazz_snake.board.stepdata import StepDataAggregate
 
 
 class GameBoard:
@@ -13,6 +16,7 @@ class GameBoard:
         self._width = width
         self._board = GameBoard.create_board(height, width)
         self._paths = []
+        self._goals = []
 
     @staticmethod
     def create_board(height, width):
@@ -22,7 +26,7 @@ class GameBoard:
     def create_cell():
         cell = {}
         for key in CellDataType:
-            cell[key] = []
+            cell[key] = key.data_aggregate_type()
 
         return cell
 
@@ -32,18 +36,17 @@ class GameBoard:
     def get_width(self):
         return self._width
 
-    def _get_cell(self, x, y=None) -> dict:
-        if y is None:
-            y = x[1]
-            x = x[0]
+    def _get_cell(self, point: ()) -> {}:
+        return self._board[point[0]][point[1]]
 
-        return self._board[x + 1][y + 1]
+    def get_cell_death_threat(self, point: ()) -> DeathThreatDataAggregate:
+        return self._get_cell(point)[CellDataType.DEATH_THREAT_LEVEL]
 
-    def get_cell(self, x, y, cell_data_type: CellDataType) -> []:
-        return self._get_cell(x, y)[cell_data_type]
+    def get_cell_steps(self, point: ()) -> StepDataAggregate:
+        return self._get_cell(point)[CellDataType.STEP]
 
-    def get_calculated_cell(self, x, y, cell_data_type: CellDataType):
-        return cell_data_type.calculate_final_value(self.get_cell(x, y, cell_data_type))
+    def get_cell(self, point: (), cell_data_type: CellDataType) -> GameBoardDataAggregate:
+        return self._get_cell(point)[cell_data_type]
 
     def get_paths(self):
         # TODO This is a silly place to do this
@@ -57,60 +60,14 @@ class GameBoard:
     def add_paths(self, paths: []):
         self._paths.extend(paths)
 
-    @staticmethod
-    def get_neighbour_cell_points(x, y=None) -> [dict]:
-        if y is None:
-            y = x[1]
-            x = x[0]
+    def add_goal(self, goal: {}):
+        self._goals.append(goal)
 
-        return [
-            RelativeCell.up(x, y),
-            RelativeCell.down(x, y),
-            RelativeCell.left(x, y),
-            RelativeCell.right(x, y)
-        ]
+    def get_goals(self):
+        return self._goals
 
-    @staticmethod
-    def get_neighbour_cell_points_with_direction(x, y=None) -> [dict]:
-        if y is None:
-            y = x[1]
-            x = x[0]
-
-        return [
-            {'direction': 'up', 'point': RelativeCell.up(x, y)},
-            {'direction': 'down', 'point': RelativeCell.down(x, y)},
-            {'direction': 'left', 'point': RelativeCell.left(x, y)},
-            {'direction': 'right', 'point': RelativeCell.right(x, y)},
-        ]
-
-    def get_final_cell(self, x, y=None) -> dict:
-        if y is None:
-            y = x[1]
-            x = x[0]
-        final_cell = {}
-        for key, value in self._get_cell(x, y).items():
-            final_cell[key] = key.calculate_final_value(value)
-
-        return final_cell
-
-    def get_neighbour_final_cells(self, x, y) -> [dict]:
-        neighbour_cell_points = self.get_neighbour_cell_points_with_direction(x, y)
-        neighbour_final_cells = []
-        for neighbour_cell_point in neighbour_cell_points:
-            final_cell = self.get_final_cell(neighbour_cell_point['point'])
-            neighbour_final_cells.append({**{'cell': final_cell}, **neighbour_cell_point})
-
-        return neighbour_final_cells
-
-    def get_relative_cell(self, x, y, cell_data_type: CellDataType, mapper):
-        relative_cell = mapper(x, y)
-        return self.get_cell(relative_cell[0], relative_cell[1], cell_data_type)
-
-    def set_cell(self, x, y, cell_data_type: CellDataType, value):
-        self._get_cell(x, y)[cell_data_type].append(value)
-
-    def is_cell_safe(self, x, y):
-        return self.get_final_cell(x, y)[CellDataType.DEATH_THREAT_LEVEL] <= DeathThreatLevel.SMALL
+    def set_cell(self, point: (), cell_data_type: CellDataType, game_board_data: GameBoardData):
+        self.get_cell(point, cell_data_type).add_data(game_board_data)
 
     def get_total_cells(self):
         return self._height * self._width
@@ -139,27 +96,49 @@ class GameBoard:
         for y in height_range:
             row = []
             for x in width_range:
-                cell = self._get_cell(x, y)
-                row.append("'POINT': (" + str(x) + "," + str(y) + ")\n"
-                           + ("\n".join("{!r}: {!r},".format(k.name, v) for k, v in cell.items())))
+                cell = self._get_cell((x, y))
+                row.append("'point': (" + str(x) + "," + str(y) + ")\n"
+                           + ("\n".join("{!r}: {!r},".format(k.name, v.to_string()) for k, v in cell.items())))
             table.add_row(row)
 
         print(table.draw())
 
 
-class RelativeCell:
+class RelativePoint:
     @staticmethod
-    def up(x, y):
-        return x, y + 1
+    def up(point: ()):
+        return point[0], point[1] + 1
 
     @staticmethod
-    def down(x, y):
-        return x, y - 1
+    def down(point: ()):
+        return point[0], point[1] - 1
 
     @staticmethod
-    def left(x, y):
-        return x - 1, y
+    def left(point: ()):
+        return point[0] - 1, point[1]
 
     @staticmethod
-    def right(x, y):
-        return x + 1, y
+    def right(point: ()):
+        return point[0] + 1, point[1]
+
+    @staticmethod
+    def get_neighbour_points(point: ()) -> [()]:
+        return list(map(lambda d: d['point'], RelativePoint.get_neighbour_points_with_direction(point)))
+
+    @staticmethod
+    def get_neighbour_points_with_direction(point: ()) -> [dict]:
+        return [
+            {'direction': 'up', 'point': RelativePoint.up(point)},
+            {'direction': 'down', 'point': RelativePoint.down(point)},
+            {'direction': 'left', 'point': RelativePoint.left(point)},
+            {'direction': 'right', 'point': RelativePoint.right(point)},
+        ]
+
+    @staticmethod
+    def get_point_direction_lookup(point: ()) -> dict:
+        return reduce(RelativePoint.reduce_to_dict, RelativePoint.get_neighbour_points_with_direction(point), {})
+
+    @staticmethod
+    def reduce_to_dict(current_value, next_value):
+        current_value[next_value['point']] = next_value['direction']
+        return current_value

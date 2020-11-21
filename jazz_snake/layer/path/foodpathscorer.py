@@ -1,4 +1,5 @@
-from jazz_snake.board.pointtype import PointType
+from jazz_snake.board.goaltype import GoalType
+from jazz_snake.board.stepdata import PointType, StepData
 from jazz_snake.layer.path.pathscorer import PathScorer
 
 
@@ -9,8 +10,8 @@ class FoodPathScorer(PathScorer):
         return (sum(scores) / (distance + 1)) + (distance * 10)
 
     @staticmethod
-    def can_score_path(step):
-        return step['point_type'] == PointType.FOOD
+    def can_score_path(step: StepData, goal_type: GoalType, you_snake_id):
+        return goal_type == GoalType.FOOD and step.is_on_path(PointType.SNAKE_HEAD, you_snake_id)
 
     def score_path(self):
         score = 0
@@ -21,18 +22,18 @@ class FoodPathScorer(PathScorer):
             score = score - 500
 
         for step in self.get_steps():
-            if step['point_id'] == self.path_step['point_id']:
+            if self.path_step.is_same_path(step):
                 continue
 
-            if step['point_type'] == PointType.FOOD:
+            if step.point_type == PointType.FOOD:
                 # alternative food on path
                 score = score - 1
-            elif step['point_type'] == PointType.SNAKE_HEAD:
-                if step['point_id'] != self.you_snake_id:
-                    other_snake_distance = step['distance']
-                    if other_snake_distance < self.current_distance:
+            elif step.point_type == PointType.SNAKE_HEAD:
+                if not step.is_on_path(PointType.SNAKE_HEAD, self.you_snake_id):
+                    other_snake_distance = step.distance
+                    if other_snake_distance < self.path_step.distance:
                         score = score + 300
-                    elif other_snake_distance == self.current_distance:
+                    elif other_snake_distance == self.path_step.distance:
                         # TODO Should compare snake lengths
                         score = score + 300
                     else:
@@ -45,4 +46,4 @@ class FoodPathScorer(PathScorer):
 
         if score < 0:
             score = 1
-        return score * (1 + (1 / float(self.current_distance)))
+        return score * (1 + (1 / float(self.path_step.distance)))

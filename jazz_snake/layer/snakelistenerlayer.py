@@ -1,7 +1,5 @@
-from jazz_snake.board.layerlifecycle import LayerLifeCycle
-from jazz_snake.board.celldatatype import CellDataType
-from jazz_snake.board.deaththreatlevel import DeathThreatLevel
 from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.board.layerlifecycle import LayerLifeCycle
 
 
 class SnakeListenerLayer:

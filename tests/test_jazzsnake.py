@@ -46,7 +46,7 @@ class TestJazzSnake(unittest.TestCase):
 
         self.assertEqual("up", jazz_snake.calculate_move())
 
-    def test_should_go_down_to_tail(self):
+    def test_should_go_down_to_tail_after_eating(self):
         with open('game_scenario_down_to_tail.json') as file:
             data = file.read().replace('\n', '')
 
@@ -65,4 +65,14 @@ class TestJazzSnake(unittest.TestCase):
         jazz_snake = JazzSnake(game_data)
 
         self.assertNotEqual("right", jazz_snake.calculate_move())
+
+    def test_only_dir_is_down(self):
+        with open('game_scenario_only_dir_is_down.json') as file:
+            data = file.read().replace('\n', '')
+
+        game_data = json.loads(data)
+
+        jazz_snake = JazzSnake(game_data)
+
+        self.assertEqual("down", jazz_snake.calculate_move())
 

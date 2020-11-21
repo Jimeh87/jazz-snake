@@ -1,17 +1,20 @@
 from enum import Enum, unique
+from typing import Type
+
+from jazz_snake.board.deaththreatdata import DeathThreatDataAggregate
+from jazz_snake.board.gameboarddata import GameBoardDataAggregate
+from jazz_snake.board.simpledata import SimpleDataAggregate
+from jazz_snake.board.stepdata import StepDataAggregate
 
 
 @unique
 class CellDataType(Enum):
-    YOUR_HEAD = ('your_head', lambda values: values)
-    DEATH_THREAT_LEVEL = ('death_threat', lambda values: max(values) if len(values) > 0 else 0)
-    STEPS = ('steps', lambda values: values)
-    GOAL = ('goal', lambda values: min(values) if len(values) > 0 else False)
-    DESIRED_PATH = ('desired_path', lambda values: min(values) if len(values) > 0 else 255)
+    YOUR_HEAD = ('your_head', SimpleDataAggregate)
+    DEATH_THREAT_LEVEL = ('death_threat', DeathThreatDataAggregate)
+    STEP = ('steps', StepDataAggregate)
+    FOOD = ('food', SimpleDataAggregate)
+    DESIRED_PATH = ('desired_path', SimpleDataAggregate)
 
-    def __init__(self, name, final_value_calc):
+    def __init__(self, name, data_aggregate_type: Type[GameBoardDataAggregate]):
         self._name = name
-        self._final_value_calc = final_value_calc
-
-    def calculate_final_value(self, values):
-        return self._final_value_calc(values)
+        self.data_aggregate_type = data_aggregate_type

@@ -1,7 +1,7 @@
-from jazz_snake.board.layerlifecycle import LayerLifeCycle
 from jazz_snake.board.celldatatype import CellDataType
-from jazz_snake.board.deaththreatlevel import DeathThreatLevel
+from jazz_snake.board.deaththreatdata import DeathThreatLevel, DeathThreatData
 from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.board.layerlifecycle import LayerLifeCycle
 
 
 class BoundaryLayer:
@@ -18,4 +18,4 @@ class BoundaryLayer:
                 death_threat_level = DeathThreatLevel.SAFE
                 if x in (min_width, max_width) or y in (min_height, max_height):
                     death_threat_level = DeathThreatLevel.SUICIDE
-                game_board.set_cell(x, y, CellDataType.DEATH_THREAT_LEVEL, death_threat_level)
+                game_board.set_cell((x, y), CellDataType.DEATH_THREAT_LEVEL, DeathThreatData(death_threat_level))

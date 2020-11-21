@@ -1,7 +1,7 @@
-from jazz_snake.board.layerlifecycle import LayerLifeCycle
 from jazz_snake.board.celldatatype import CellDataType
-from jazz_snake.board.deaththreatlevel import DeathThreatLevel
+from jazz_snake.board.deaththreatdata import DeathThreatData, DeathThreatLevel
 from jazz_snake.board.gameboard import GameBoard
+from jazz_snake.board.layerlifecycle import LayerLifeCycle
 
 
 class LowRiskZonesLayer:
@@ -16,4 +16,4 @@ class LowRiskZonesLayer:
         for x in range(min_width, max_width):
             for y in range(min_height, max_height):
                 if x in (min_width, max_width - 1) or y in (min_height, max_height - 1):
-                    game_board.set_cell(x, y, CellDataType.DEATH_THREAT_LEVEL, DeathThreatLevel.SMALL)
+                    game_board.set_cell((x, y), CellDataType.DEATH_THREAT_LEVEL, DeathThreatData(DeathThreatLevel.SMALL))
