@@ -3,9 +3,27 @@
     "id": "538aaba2-984e-4f65-9a25-8c4fa5b24cd1",
     "ruleset": {
       "name": "standard",
-      "version": "v1.0.15"
+      "version": "v1.2.3-custom-json-fix",
+      "settings": {
+        "foodSpawnChance": 15,
+        "minimumFood": 1,
+        "hazardDamagePerTurn": 0,
+        "hazardMap": "",
+        "hazardMapAuthor": "",
+        "royale": {
+          "shrinkEveryNTurns": 0
+        },
+        "squad": {
+          "allowBodyCollisions": false,
+          "sharedElimination": false,
+          "sharedHealth": false,
+          "sharedLength": false
+        }
+      }
     },
-    "timeout": 500
+    "map": "standard",
+    "timeout": 500,
+    "source": "custom"
   },
   "turn": 242,
   "board": {

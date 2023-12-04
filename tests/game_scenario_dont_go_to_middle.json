@@ -2,10 +2,28 @@
   "game": {
     "id": "59753b71-b259-4f83-b329-5f5ec7c6961c",
     "ruleset": {
-      "name": "solo",
-      "version": "v1.0.15"
+      "name": "standard",
+      "version": "v1.2.3-custom-json-fix",
+      "settings": {
+        "foodSpawnChance": 15,
+        "minimumFood": 1,
+        "hazardDamagePerTurn": 0,
+        "hazardMap": "",
+        "hazardMapAuthor": "",
+        "royale": {
+          "shrinkEveryNTurns": 0
+        },
+        "squad": {
+          "allowBodyCollisions": false,
+          "sharedElimination": false,
+          "sharedHealth": false,
+          "sharedLength": false
+        }
+      }
     },
-    "timeout": 500
+    "map": "standard",
+    "timeout": 500,
+    "source": "custom"
   },
   "turn": 136,
   "board": {
