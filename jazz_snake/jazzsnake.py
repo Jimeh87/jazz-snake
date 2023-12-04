@@ -18,6 +18,7 @@ class JazzSnake:
             layer_factory.create_goal_layer(),
             layer_factory.create_boundary_layer(),
             layer_factory.create_low_risk_zones_layer(),
+            layer_factory.create_hazard_layer(),
             layer_factory.create_available_area_path_layer(),
             layer_factory.create_steps_from_point_layer(),
             layer_factory.create_snake_layer(),

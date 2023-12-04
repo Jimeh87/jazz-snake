@@ -2,6 +2,7 @@ from jazz_snake.board.stepdata import PointType
 from jazz_snake.layer.boundarylayer import BoundaryLayer
 from jazz_snake.layer.directpathlayer import DirectPathLayer
 from jazz_snake.layer.goallayer import GoalLayer
+from jazz_snake.layer.hazardlayer import HazardLayer
 from jazz_snake.layer.lowriskzoneslayer import LowRiskZonesLayer
 from jazz_snake.layer.path.availableareapathlayer import AvailableAreaPathLayer
 from jazz_snake.layer.path.foodpathscorer import FoodPathScorer
@@ -69,3 +70,6 @@ class LayerFactory:
 
     def create_paths_layer(self) -> PathsLayer:
         return PathsLayer(self._game_data['you'], [FoodPathScorer, TailPathScorer, MiddlePathScorer, HeadAttackPathScorer])
+
+    def create_hazard_layer(self) -> HazardLayer:
+        return HazardLayer(self._game_data['game']['ruleset']['settings'], self._game_data['board']['hazards'], self._game_data['you'])
