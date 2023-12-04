@@ -13,7 +13,7 @@ class Battlesnake(object):
             "author": "Jim Rennie",
             "color": "#006400",
             "head": "silly",
-            "tail": "small-rattle",
+            "tail": "pop-star",
         }
 
     @cherrypy.expose
