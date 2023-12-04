@@ -4,19 +4,10 @@ import cherrypy
 
 from jazz_snake.jazzsnake import JazzSnake
 
-"""
-This is a simple Battlesnake server written in Python.
-For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python/README.md
-"""
-
-
 class Battlesnake(object):
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def index(self):
-        # This function is called when you register your Battlesnake on play.battlesnake.com
-        # It controls your Battlesnake appearance and author permissions.
-        # TIP: If you open your Battlesnake URL in browser you should see this data
         return {
             "apiversion": "1",
             "author": "Jim Rennie",
@@ -30,7 +21,6 @@ class Battlesnake(object):
     def start(self):
         # This function is called everytime your snake is entered into a game.
         # cherrypy.request.json contains information about the game that's about to be played.
-        # TODO: Use this function to decide how your snake is going to look on the board.
         data = cherrypy.request.json
 
         print("START")
@@ -42,7 +32,6 @@ class Battlesnake(object):
     def move(self):
         # This function is called on every turn of a game. It's how your snake decides where to move.
         # Valid moves are "up", "down", "left", or "right".
-        # TODO: Use the information in cherrypy.request.json to decide your next move.
         data = cherrypy.request.json
         print(f"TURN {data['turn']}")
         print("==============")

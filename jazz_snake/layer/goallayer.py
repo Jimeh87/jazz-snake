@@ -1,5 +1,5 @@
-from random import random, randrange
-
+from random import randrange
+from math import ceil
 from jazz_snake.board.celldatatype import CellDataType
 from jazz_snake.board.gameboard import GameBoard
 from jazz_snake.board.goaltype import GoalType
@@ -31,19 +31,19 @@ class GoalLayer:
             'point': (tail['x'], tail['y'])
         })
 
-        half_width = int(game_board.get_width() / 2)
-        half_height = int(game_board.get_height() / 2)
-        width_rand = randrange(int(-half_width / 2), int(half_width / 2))
-        height_rand = randrange(int(-half_height / 2), int(half_height / 2))
+        half_width = ceil(game_board.get_width() / 2)
+        half_height = ceil(game_board.get_height() / 2)
+        width_rand = randrange(ceil(-half_width / 2), ceil(half_width / 2))
+        height_rand = randrange(ceil(-half_height / 2), ceil(half_height / 2))
         game_board.add_goal({
             'type': GoalType.CENTER,
             'point': (half_width + width_rand, half_height + height_rand)
         })
         if self._you['length'] < 8:
-            quarter_width = int(game_board.get_width() / 4)
-            quarter_height = int(game_board.get_height() / 4)
-            quarter_width_rand = randrange(int(-half_width / 4), int(half_width / 4))
-            quarter_height_rand = randrange(int(-half_height / 4), int(half_height / 4))
+            quarter_width = ceil(game_board.get_width() / 4)
+            quarter_height = ceil(game_board.get_height() / 4)
+            quarter_width_rand = randrange(ceil(-half_width / 4), ceil(half_width / 4))
+            quarter_height_rand = randrange(ceil(-half_height / 4), ceil(half_height / 4))
             game_board.add_goal({
                 'type': GoalType.CENTER,
                 'point': (quarter_width + quarter_width_rand, quarter_height + quarter_height_rand)

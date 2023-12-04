@@ -1,5 +1,3 @@
-from functools import reduce
-
 from texttable import Texttable
 
 from jazz_snake.board.gameboard import GameBoard, RelativePoint
